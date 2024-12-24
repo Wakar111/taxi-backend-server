@@ -9,7 +9,19 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.use(cors());
+// Define base URL for API endpoints
+const baseUrl = process.env.NODE_ENV === 'production'
+  ? process.env.BASE_URL
+  : `http://localhost:${port}`;
+
+// Configure CORS options
+const corsOptions = {
+  origin: ['http://localhost:5173', 'http://127.0.0.1:5173', process.env.FRONTEND_URL].filter(Boolean), // Add your frontend URL
+  methods: ['GET', 'POST'],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // In-memory storage for bookings
@@ -48,7 +60,7 @@ app.post('/api/book-ride', async (req, res) => {
     const bookingData = req.body;
     const bookingNumber = generateBookingNumber();
     const cancellationToken = generateCancellationToken();
-    const cancellationUrl = `http://localhost:${port}/api/cancel-ride?token=${cancellationToken}`;
+    const cancellationUrl = `${baseUrl}/api/cancel-ride?token=${cancellationToken}`;
 
     // Store booking data
     activeBookings.set(cancellationToken, {
@@ -60,8 +72,8 @@ app.post('/api/book-ride', async (req, res) => {
     // Format date for email
     const formattedDateTime = bookingData.type === 'Scheduled Ride' && bookingData.dateTime !== 'As soon as possible'
       ? new Date(bookingData.dateTime).toLocaleString('en-US', {
-          dateStyle: 'full',
-          timeStyle: 'short'
+              dateStyle: 'full',
+              timeStyle: 'short'
         })
       : 'As soon as possible';
 
