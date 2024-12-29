@@ -70,12 +70,12 @@ app.post('/api/book-ride', async (req, res) => {
     });
 
     // Format date for email
-    const formattedDateTime = bookingData.type === 'Scheduled Ride' && bookingData.dateTime !== 'As soon as possible'
+    const formattedDateTime = bookingData.type === 'Geplante Fahrt' && bookingData.dateTime !== 'As soon as possible'
       ? new Date(bookingData.dateTime).toLocaleString('en-US', {
               dateStyle: 'full',
               timeStyle: 'short'
         })
-      : 'As soon as possible';
+      : 'Sofort';
 
     // Email content for customer
     const customerMailOptions = {
