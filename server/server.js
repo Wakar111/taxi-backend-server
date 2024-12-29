@@ -81,30 +81,30 @@ app.post('/api/book-ride', async (req, res) => {
     const customerMailOptions = {
       from: process.env.EMAIL_USER,
       to: bookingData.email,
-      subject: `TaxiBoy - Booking Confirmation #${bookingNumber}`,
+      subject: `TaxiBoy - Buchung Bestätigt #${bookingNumber}`,
       html: `
-        <h1>Your Ride Has Been Booked!</h1>
+        <h1>Ihre Fahrt wurde gebucht!</h1>
         <div style="background-color: #f3f4f6; padding: 15px; margin: 20px 0; border-radius: 5px;">
-          <h2 style="color: #1f2937; margin: 0;">Booking Number: ${bookingNumber}</h2>
+          <h2 style="color: #1f2937; margin: 0;">Buchungsnummer: ${bookingNumber}</h2>
         </div>
-        <p>Thank you for choosing TaxiBoy. Here are your booking details:</p>
+        <p>Vielen Dank für Ihre Wahl von TaxiBoy. Hier sind Ihre Buchungsdetails:</p>
         <ul style="list-style: none; padding: 0;">
-          <li><strong>Booking Type:</strong> ${bookingData.type}</li>
-          <li><strong>Pickup Location:</strong> ${bookingData.pickupLocation}</li>
-          <li><strong>Destination:</strong> ${bookingData.destination}</li>
-          <li><strong>Date/Time:</strong> ${formattedDateTime}</li>
-          <li><strong>Vehicle Type:</strong> ${bookingData.vehicleType}</li>
+          <li><strong>Buchungsart:</strong> ${bookingData.type}</li>
+          <li><strong>Abfahrtort:</strong> ${bookingData.pickupLocation}</li>
+          <li><strong>Ziel:</strong> ${bookingData.destination}</li>
+          <li><strong>Datum/Zeit:</strong> ${formattedDateTime}</li>
+          <li><strong>Fahrzeugtyp:</strong> ${bookingData.vehicleType}</li>
           <li><strong>Name:</strong> ${bookingData.name}</li>
-          <li><strong>Phone:</strong> ${bookingData.phone}</li>
-          <li><strong>Email:</strong> ${bookingData.email}</li>
+          <li><strong>Telefon:</strong> ${bookingData.phone}</li>
+          <li><strong>E-Mail:</strong> ${bookingData.email}</li>
         </ul>
-        <p>Please keep your booking number for future reference.</p>
+        <p>Bitte bewahren Sie Ihre Buchungsnummer für zukünftige Referenzen auf.</p>
         <div style="margin: 20px 0; padding: 15px; background-color: #fee2e2; border-radius: 5px;">
-          <p style="margin: 0; color: #991b1b;">Need to cancel your ride?</p>
-          <p style="margin: 5px 0;">Click the link below to cancel your booking:</p>
-          <a href="${cancellationUrl}" style="display: inline-block; padding: 10px 20px; background-color: #dc2626; color: white; text-decoration: none; border-radius: 5px;">Cancel My Ride</a>
+          <p style="margin: 0; color: #991b1b;">Möchten Sie Ihre Fahrt stornieren?</p>
+          <p style="margin: 5px 0;">Klicken Sie auf den untenstehenden Link, um Ihre Buchung zu stornieren:</p>
+          <a href="${cancellationUrl}" style="display: inline-block; padding: 10px 20px; background-color: #dc2626; color: white; text-decoration: none; border-radius: 5px;">Buchung Stornieren</a>
         </div>
-        <p style="color: #6b7280; font-size: 0.875rem;">If you need any other modifications to your booking, please contact our support team.</p>
+        <p style="color: #6b7280; font-size: 0.875rem;">Wenn Sie weitere Änderungen an Ihrer Buchung benötigen, kontaktieren Sie bitte unser Support-Team.</p>
       `
     };
 
@@ -112,25 +112,25 @@ app.post('/api/book-ride', async (req, res) => {
     const adminMailOptions = {
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
-      subject: `[ADMIN] New Booking #${bookingNumber}`,
+      subject: `[ADMIN] Neue Buchung erhalten #${bookingNumber}`,
       html: `
-        <h1>New Booking Received</h1>
+        <h1>Neue Buchung erhalten</h1>
         <div style="background-color: #f3f4f6; padding: 15px; margin: 20px 0; border-radius: 5px;">
-          <h2 style="color: #1f2937; margin: 0;">Booking Number: ${bookingNumber}</h2>
+          <h2 style="color: #1f2937; margin: 0;">Buchungsnummer: ${bookingNumber}</h2>
         </div>
-        <p>A new booking has been received. Details below:</p>
+        <p>Eine neuer Buchung wurde erhalten. Hier sind die Details der Buchung:</p>
         <ul style="list-style: none; padding: 0;">
-          <li><strong>Booking Type:</strong> ${bookingData.type}</li>
-          <li><strong>Pickup Location:</strong> ${bookingData.pickupLocation}</li>
-          <li><strong>Destination:</strong> ${bookingData.destination}</li>
-          <li><strong>Date/Time:</strong> ${formattedDateTime}</li>
-          <li><strong>Vehicle Type:</strong> ${bookingData.vehicleType}</li>
+          <li><strong>Buchungstyp:</strong> ${bookingData.type}</li>
+          <li><strong>Abfahrtort:</strong> ${bookingData.pickupLocation}</li>
+          <li><strong>Zielort:</strong> ${bookingData.destination}</li>
+          <li><strong>Datum/Uhrzeit:</strong> ${formattedDateTime}</li>
+          <li><strong>Fahrzeug Type:</strong> ${bookingData.vehicleType}</li>
           <hr>
-          <li><strong>Customer Name:</strong> ${bookingData.name}</li>
-          <li><strong>Customer Phone:</strong> ${bookingData.phone}</li>
-          <li><strong>Customer Email:</strong> ${bookingData.email}</li>
+          <li><strong>Kunden Name:</strong> ${bookingData.name}</li>
+          <li><strong>Kunden Phone:</strong> ${bookingData.phone}</li>
+          <li><strong>Kunden Email:</strong> ${bookingData.email}</li>
         </ul>
-        <p>Please assign a driver to this booking.</p>
+        <p>Bitte aktualisieren Sie das Planungssystem entsprechend.</p>
       `
     };
 
@@ -142,14 +142,14 @@ app.post('/api/book-ride', async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'Booking confirmed! Check your email (spam folder) for details.',
+      message: 'Buchung erfolgreich! Überprüfen Sie Ihre E-Mail (Spam-Ordner) für weitere Informationen.',
       bookingNumber: bookingNumber
     });
   } catch (error) {
     console.error('Booking error:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to process booking. Please try again.'
+      error: 'Fehler beim Buchen. Fehler beim Verarbeiten der Buchung. Bitte versuchen Sie es erneut.'
     });
   }
 });
@@ -161,7 +161,7 @@ app.get('/api/cancel-ride', async (req, res) => {
     
     // Check if booking exists
     if (!activeBookings.has(token)) {
-      return res.status(404).send('Booking not found or already cancelled.');
+      return res.status(404).send('Buchung nicht gefunden oder bereits storniert.');
     }
 
     const booking = activeBookings.get(token);
@@ -170,21 +170,21 @@ app.get('/api/cancel-ride', async (req, res) => {
     const customerCancelMailOptions = {
       from: process.env.EMAIL_USER,
       to: booking.email,
-      subject: `TaxiBoy - Booking Cancellation Confirmation #${booking.bookingNumber}`,
+      subject: `TaxiBoy - Buchungsstornierung Bestätigung #${booking.bookingNumber}`,
       html: `
-        <h1>Your Ride Has Been Cancelled</h1>
+        <h1>Ihre Fahrt wurde storniert</h1>
         <div style="background-color: #fee2e2; padding: 15px; margin: 20px 0; border-radius: 5px;">
-          <h2 style="color: #991b1b; margin: 0;">Booking #${booking.bookingNumber} has been cancelled</h2>
+          <h2 style="color: #991b1b; margin: 0;">Buchung #${booking.bookingNumber} wurde storniert</h2>
         </div>
-        <p>Your booking has been successfully cancelled. Here are the details of the cancelled booking:</p>
+        <p>Ihre Buchung wurde erfolgreich storniert. Hier sind die Details der stornierten Buchung:</p>
         <ul style="list-style: none; padding: 0;">
-          <li><strong>Booking Number:</strong> ${booking.bookingNumber}</li>
+          <li><strong>Buchungsnummer:</strong> ${booking.bookingNumber}</li>
           <li><strong>Name:</strong> ${booking.name}</li>
-          <li><strong>Pickup Location:</strong> ${booking.pickupLocation}</li>
-          <li><strong>Destination:</strong> ${booking.destination}</li>
+          <li><strong>Abfahrtort:</strong> ${booking.pickupLocation}</li>
+          <li><strong>Zielort:</strong> ${booking.destination}</li>
         </ul>
-        <p>If you need to book another ride, please visit our website.</p>
-        <p>Thank you for choosing TaxiBoy!</p>
+        <p>Wenn Sie eine neue Fahrt buchen möchten, besuchen Sie bitte unsere Website.</p>
+        <p>Vielen Dank, dass Sie sich für TaxiBoy entschieden haben!</p>
       `
     };
 
@@ -192,23 +192,23 @@ app.get('/api/cancel-ride', async (req, res) => {
     const adminCancelMailOptions = {
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
-      subject: `[ADMIN] Booking Cancelled #${booking.bookingNumber}`,
+      subject: `[ADMIN] Buchung Storniert #${booking.bookingNumber}`,
       html: `
-        <h1>Booking Cancellation Notice</h1>
+        <h1>Buchung storniert</h1>
         <div style="background-color: #fee2e2; padding: 15px; margin: 20px 0; border-radius: 5px;">
-          <h2 style="color: #991b1b; margin: 0;">Booking #${booking.bookingNumber} has been cancelled</h2>
+          <h2 style="color: #991b1b; margin: 0;">Buchung #${booking.bookingNumber} wurde storniert</h2>
         </div>
-        <p>A customer has cancelled their booking. Details below:</p>
+        <p>Eine Kunde hat seine Buchung storniert. Details unten:</p>
         <ul style="list-style: none; padding: 0;">
-          <li><strong>Booking Number:</strong> ${booking.bookingNumber}</li>
-          <li><strong>Customer Name:</strong> ${booking.name}</li>
-          <li><strong>Customer Email:</strong> ${booking.email}</li>
-          <li><strong>Customer Phone:</strong> ${booking.phone}</li>
-          <li><strong>Pickup Location:</strong> ${booking.pickupLocation}</li>
-          <li><strong>Destination:</strong> ${booking.destination}</li>
-          <li><strong>Vehicle Type:</strong> ${booking.vehicleType}</li>
+          <li><strong>Buchungsnummer:</strong> ${booking.bookingNumber}</li>
+          <li><strong>Kundenname:</strong> ${booking.name}</li>
+          <li><strong>Kunden-E-Mail:</strong> ${booking.email}</li>
+          <li><strong>Kunden-Telefon:</strong> ${booking.phone}</li>
+          <li><strong>Abfahrtort:</strong> ${booking.pickupLocation}</li>
+          <li><strong>Zielort:</strong> ${booking.destination}</li>
+          <li><strong>Fahrzeugtyp:</strong> ${booking.vehicleType}</li>
         </ul>
-        <p>Please update the scheduling system accordingly.</p>
+        <p>Bitte aktualisieren Sie das Planungssystem entsprechend.</p>
       `
     };
 
@@ -225,7 +225,7 @@ app.get('/api/cancel-ride', async (req, res) => {
     res.send(`
       <html>
         <head>
-          <title>Booking Cancelled</title>
+          <title>Buchung storniert</title>
           <style>
             body {
               font-family: Arial, sans-serif;
@@ -249,17 +249,17 @@ app.get('/api/cancel-ride', async (req, res) => {
         </head>
         <body>
           <div class="success-box">
-            <h1>Booking Cancelled Successfully</h1>
-            <p class="booking-number">Booking #${booking.bookingNumber}</p>
+            <h1>Buchung erfolgreich storniert</h1>
+            <p class="booking-number">Buchungsnummer #${booking.bookingNumber}</p>
           </div>
-          <p>Your booking has been cancelled and you will receive a confirmation email shortly.</p>
-          <p>Thank you for using TaxiBoy!</p>
+          <p>Ihre Buchung wurde erfolgreich storniert und Sie erhalten eine Bestätigungs-E-Mail kurzzeitig.</p>
+          <p>Vielen Dank für die Nutzung von TaxiBoy!</p>
         </body>
       </html>
     `);
   } catch (error) {
-    console.error('Cancellation error:', error);
-    res.status(500).send('Failed to cancel booking. Please try again or contact support.');
+    console.error('Buchung konnte nicht storniert werden:', error);
+    res.status(500).send('Buchung konnte nicht storniert werden. Bitte versuchen Sie es erneut oder kontaktieren Sie den Support');
   }
 });
 
